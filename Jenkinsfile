@@ -17,7 +17,7 @@ node {
 
     stage('Push image') {
         
-        docker.withRegistry('https://hub.docker.com/repository/docker/dannykvrepo/node-ci-cd', 'dockerhub') {
+        docker.withRegistry('', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
