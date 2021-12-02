@@ -24,8 +24,10 @@ node {
     }
 
     stage('Deploy') {
-        docker.image('dannykvrepo/node-ci-cd').withRun('-p 3000:3000') {c ->
-            sh "docker logs ${c.id}"
+        docker.withServer('tcp://54.254.115.199:3001', 'swarm-certs') {
+            docker.image('dannykvrepo/node-ci-cd').withRun('-p 3000:3000') {
+                /* do things */
+            }
         }
     }
 }
