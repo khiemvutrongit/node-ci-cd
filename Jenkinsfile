@@ -24,9 +24,9 @@ node {
     }
 
     stage('Deploy') {
-        docker.withServer('tcp://54.254.115.199:3001', 'swarm-certs') {
-            docker.image('dannykvrepo/node-ci-cd').withRun('-p 3000:3000') {
-                /* do things */
+        docker.withServer('tcp://54.254.115.199:2376', 'swarm-certs') {
+            docker.image('dannykvrepo/node-ci-cd').withRun('-p 3000:80') {
+                sh "curl -i http://${hostIp(c)}:3000/"
             }
         }
     }
