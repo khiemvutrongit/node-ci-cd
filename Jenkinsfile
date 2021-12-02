@@ -26,8 +26,6 @@ node {
     stage('Deploy') {
         docker.image('dannykvrepo/node-ci-cd').withRun('-p 3306:3306') { c ->
             sh "docker logs ${c.id}"
-            sh "docker image prune -a"
-            sh "docker container prune"
         }
     }
 }
