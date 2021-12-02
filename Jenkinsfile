@@ -24,8 +24,8 @@ node {
     }
 
     stage('Deploy') {
-        docker.image('dannykvrepo/node-ci-cd').withRun('-p 3000:3000') { c ->
-            sh "docker logs ${c}"
+        docker.image('dannykvrepo/node-ci-cd').withRun('-p 3000:3000') {c ->
+            sh "docker logs ${c.id}"
         }
     }
 }
