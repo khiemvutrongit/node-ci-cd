@@ -1,26 +1,10 @@
-def branch = 'main'
-def gitCommitRrl = 'https://bitbucket.org/roxwin/service-tracker/commits/'
-def imageName = 'dannykvrepo/node-ci-cd'
-def defaultTag = 'latest'
-
-pipeline { 
-    agent any
-    stages { 
-        stage ('Build') { 
-
+pipeline {
+    agent { docker { image 'node:14-alpine' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'npm --version'
+            }
         }
-        stage ('Test') { 
-        
-        }
-        stage ('QA') { 
-        
-        }
-        stage ('Deploy') { 
-        
-        }
-        stage ('Monitor') { 
-
-        }
-
-    }           
+    }
 }
