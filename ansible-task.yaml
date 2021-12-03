@@ -1,11 +1,5 @@
 - name: My playbook
   hosts: all
-  become: yes
-  become_method: sudo
   tasks:
-    - name: Create directory to store
-      file:
-        path: /var/docker/www/{{ project_name }}
-        state: directory
-    - name: Start docker-compose
-      shell: docker-compose -f docker-compose.yml up -d
+    - name: Run docker-compose
+      command: "docker-compose up -d /node-ci-cd"
