@@ -1,5 +1,0 @@
-- name: My playbook
-  hosts: all
-  tasks:
-    - name: Run docker-compose
-      command: "docker-compose up -d /node-ci-cd"
