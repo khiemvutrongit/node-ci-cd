@@ -53,10 +53,10 @@ pipeline{
         stage('Docker Build, Push'){
             steps {
                 dir('./') {
-                    withDockerRegistry(credentialsId: 'dockerhub', url: "") {
+                    withDockerRegistry(credentialsId: '6f6d1c16-5886-4f58-b19c-941f6da40fb6', url: "") {
                         sh "docker build -t ${imageName} ."
-                        // sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
-                        // sh "docker push ${imageName}:${defaultTag}"
+                        sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
+                        sh "docker push ${imageName}:${defaultTag}"
                     }
                 }
             }
