@@ -2,10 +2,10 @@
   become: yes
   become_method: sudo
   vars:
-    project_name: super-admin-service-tracker
-    project_domain: service-tracker.dev.altitudehq.com
-    letsencrypt_email: viet@roxwin.com
-    cronjob_name: super_admin_service_tracker
+    project_name:  ci-cd
+    project_domain: khiem.work
+    letsencrypt_email: khiemvutrongit@gmail.com
+    cronjob_name:  ci_cd
   tasks:
     - name: Creates directory to store project
       file:
