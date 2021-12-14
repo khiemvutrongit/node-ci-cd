@@ -57,15 +57,9 @@ pipeline{
                         sh "docker build -t ${imageName} ."
                         sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
                         sh "docker push ${imageName}:${defaultTag}"
+                        sh "docker-compose up -d"
                     }
                 }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo "PATH is: $PATH"
-                sh '/usr/local/bin/docker-compose up --build'
             }
         }
     }
