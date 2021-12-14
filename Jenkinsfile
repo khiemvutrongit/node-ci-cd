@@ -7,7 +7,8 @@ def tokenAccess = '6f6d1c16-5886-4f58-b19c-941f6da40fb6'
 
 pipeline{
     agent any
-    
+    dockerImage = ''
+
     environment {
         GIT_COMMIT_ID = ""
         GIT_MESSAGE = ""
@@ -52,11 +53,25 @@ pipeline{
 
         stage('Docker Build, Push'){
             steps {
-                dir ('./') {
-                    withDockerRegistry([credentialsId: tokenAccess, url: ""]) {
-                        sh "docker build -t ${imageName} ."
-                        sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
-                        sh "docker push ${imageName}:${defaultTag}"
+                script {
+                    dockerImage = docker.build imagename
+                }
+                // dir ('./') {
+                //     withDockerRegistry([credentialsId: tokenAccess, url: ""]) {
+                //         sh "docker build -t ${imageName} ."
+                //         sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
+                //         sh "docker push ${imageName}:${defaultTag}"
+                //     }
+                // }
+            }
+        }
+
+        stage('Deploy Image') {
+            steps{
+                script {
+                    docker.withRegistry( '', 'dockerhub' ) {
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push('latest')
                     }
                 }
             }
