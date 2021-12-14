@@ -2,7 +2,8 @@ def gitRrl = 'https://github.com/khiemvutrongit/node-ci-cd.git'
 def branch  = 'main'
 def defaultTag = 'latest'
 def dockerUrl = 'https://hub.docker.com/repository/docker/dannykvrepo/node-ci-cd'
-def imageName = 'service-demo'
+def imageName = 'dannykvrepo/node-ci-cd'
+def tokenAccess = '6f6d1c16-5886-4f58-b19c-941f6da40fb6'
 
 pipeline{
     agent any
@@ -49,14 +50,21 @@ pipeline{
             }
         }
 
-        stage('Docker Build, Push'){
+        stage('Build') {
             steps {
-                dir ('./') {
-                    withDockerRegistry(credentialsId: 'dockerhub', url: dockerUrl) {
-                        sh "docker build -t ${imageName} ."
-                        // sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
-                        // sh "docker push ${imageName}:${GIT_TAG}"
-                    }
+                sh "docker build -t ${imageName} ."
+                sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
+            }
+        }
+
+        stage('Push'){
+            when {
+                branch 'main'
+            }
+            steps {
+                withDockerRegistry([ credentialsId: tokenAccess, url: "" ]) {
+                        sh "docker push ${imageName}:${defaultTag}"
+                        sh "docker push ${imageName}:${GIT_TAG}"
                 }
             }
         }
