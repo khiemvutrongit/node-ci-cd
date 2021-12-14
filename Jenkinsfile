@@ -63,11 +63,11 @@ pipeline{
                 }
             }
         }
-    }
 
-    stage('Run Ansible'){
-        steps {
-            ansiblePlaybook inventory: ansibleUrl, playbook: ansibleHostUrl
+        stage('Run Ansible'){
+            steps {
+                ansiblePlaybook inventory: ansibleUrl, playbook: ansibleHostUrl
+            }
         }
     }
 
