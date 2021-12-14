@@ -52,7 +52,7 @@ pipeline{
 
         stage('Docker Build, Push'){
             steps {
-                script {
+                dir('./') {
                     withDockerRegistry(credentialsId: tokenAccess, url: "") {
                         sh "docker build -t ${imageName} ."
                         // sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
