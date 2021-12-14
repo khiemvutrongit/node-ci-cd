@@ -57,17 +57,6 @@ pipeline{
             }
         }
 
-        stage('Push'){
-            when {
-                branch 'main'
-            }
-            steps {
-                withDockerRegistry([ credentialsId: tokenAccess, url: "" ]) {
-                        sh "docker push ${imageName}:${defaultTag}"
-                        sh "docker push ${imageName}:${GIT_TAG}"
-                }
-            }
-        }
     }
 
 }
