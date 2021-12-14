@@ -53,10 +53,10 @@ pipeline{
         stage('Docker Build, Push'){
             steps {
                 script {
-                    withDockerRegistry([credentialsId: tokenAccess, url: ""]) {
+                    withDockerRegistry(credentialsId: tokenAccess, url: "") {
                         sh "docker build -t ${imageName} ."
-                        sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
-                        sh "docker push ${imageName}:${defaultTag}"
+                        // sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
+                        // sh "docker push ${imageName}:${defaultTag}"
                     }
                 }
             }
