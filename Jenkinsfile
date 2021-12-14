@@ -50,11 +50,15 @@ pipeline{
             }
         }
 
-        stage('Docker Build, Push') {
+        stage('Docker Build, Push'){
             steps {
-                sh "docker build -t ${imageName} ."
-                sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
-                sh "docker push dannykvrepo/node-ci-cd:${defaultTag}"
+                dir ('./') {
+                    withDockerRegistry(credentialsId: 'tokenAccess', url: "") {
+                        sh "docker build -t ${imageName} ."
+                        sh "docker tag ${imageName}:latest ${imageName}:${GIT_TAG}"
+                        sh "docker push dannykvrepo/node-ci-cd:${defaultTag}"
+                    }
+                }
             }
         }
 
