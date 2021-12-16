@@ -1,8 +1,8 @@
-FROM node:latest as node
+FROM node:latest
 RUN mkdir -p /app
 WORKDIR /app
 COPY package*.json /app/
 RUN npm install 
 COPY . /app/
 EXPOSE 3000
-CMD ["node", "index.js"]
+CMD ["node", "sourcecode/index.js"]
