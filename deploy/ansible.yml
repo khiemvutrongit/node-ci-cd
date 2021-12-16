@@ -1,11 +1,6 @@
 - hosts: hosts
   become: yes
   become_method: sudo
-  vars:
-    project_name:  ci-cd
-    project_domain: khiem.work
-    letsencrypt_email: khiemvutrongit@gmail.com
-    cronjob_name:  ci_cd
   tasks:
     - name: Creates directory to store project
       file:
@@ -27,27 +22,3 @@
       shell: docker-compose -f docker-compose.yml up -d
       args:
         chdir: /var/docker/www/{{ project_name }}
-
-    - name: Check Nginx setting
-      stat:
-        path: /etc/nginx/sites-available/{{ project_domain }}
-      register: nginx_setting_result
-
-    - name: Copy Nginx Setting to Server Nginx Site Availables
-      copy:
-        src: ./nginx-https.conf
-        dest: /etc/nginx/sites-available/{{ project_domain }}
-      when: nginx_setting_result.stat.exists == False
-
-    - name: Check link existed
-      stat:
-        path: /etc/nginx/sites-enabled/{{ project_domain }}
-      register: link_result
-
-    - name: Link the nginx setting
-      shell: ln -s /etc/nginx/sites-available/{{ project_domain }} /etc/nginx/sites-enabled/
-      when: (nginx_setting_result.stat.exists == False) and link_result.stat.exists == False
-
-    - name: restart nginx
-      service: name=nginx state=restarted enabled=yes
-      when: nginx_setting_result.stat.exists == False
